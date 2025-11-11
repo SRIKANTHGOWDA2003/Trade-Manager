@@ -8,91 +8,363 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-chart-line"></i> Trade Manager</h1>
-            <p>Track, analyze, and improve your trading performance</p>
-        </header>
+    <!-- Login/Signup Screen -->
+    <div id="auth-screen" class="auth-screen">
+        <div class="auth-container">
+            <div class="auth-header">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h1>Trade Manager</h1>
+                </div>
+                <p>Track, analyze, and improve your trading performance</p>
+            </div>
 
-        <nav class="nav-tabs">
-            <button class="nav-btn active" onclick="showSection('add-trade')">
-                <i class="fas fa-plus"></i> Add Trade
-            </button>
-            <button class="nav-btn" onclick="showSection('trade-history')">
-                <i class="fas fa-history"></i> Trade History
-            </button>
-            <button class="nav-btn" onclick="showSection('analytics')">
-                <i class="fas fa-chart-bar"></i> Analytics
-            </button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-username">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="login-username" required placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="login-password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-sign-in-alt"></i> Login to Your Account
+                </button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="auth-form">
+                <div class="form-group">
+                    <label for="signup-username">
+                        <i class="fas fa-user"></i> Username
+                    </label>
+                    <input type="text" id="signup-username" required placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">
+                        <i class="fas fa-envelope"></i> Email
+                    </label>
+                    <input type="email" id="signup-email" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <input type="password" id="signup-password" required placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="signup-fullname">
+                        <i class="fas fa-id-card"></i> Full Name
+                    </label>
+                    <input type="text" id="signup-fullname" required placeholder="Enter your full name">
+                </div>
+                <button type="submit" class="auth-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p><i class="fas fa-shield-alt"></i> Your data is stored locally and securely</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app-container" class="app-container" style="display: none;">
+        <nav class="top-nav">
+            <div class="nav-left">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>Trade Manager</h2>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="user-profile" onclick="toggleUserMenu()">
+                    <img id="user-avatar" src="https://ui-avatars.com/api/?name=User&background=2563eb&color=fff" alt="User Avatar">
+                    <span id="user-name">User</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="user-menu" class="user-menu">
+                    <a href="#" onclick="showProfile()">
+                        <i class="fas fa-user"></i> Profile
+                    </a>
+                    <a href="#" onclick="showSettings()">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                    <a href="#" onclick="logout()" class="logout-link">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
         </nav>
+
+        <div class="container">
+            <!-- Quick Stats Dashboard -->
+            <div class="dashboard-stats">
+                <div class="stat-card profit-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trending-up"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="total-profit">$0.00</h3>
+                        <p>Total P&L</p>
+                        <span class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +0%
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card trades-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="total-trades">0</h3>
+                        <p>Total Trades</p>
+                        <span class="stat-change neutral">
+                            <i class="fas fa-minus"></i> 0
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card winrate-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="win-rate">0%</h3>
+                        <p>Win Rate</p>
+                        <span class="stat-change neutral">
+                            <i class="fas fa-chart-pie"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="stat-card streak-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="current-streak">0</h3>
+                        <p>Current Streak</p>
+                        <span class="stat-change positive">
+                            <i class="fas fa-bolt"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div class="calendar-section">
+                <div class="calendar-header">
+                    <h3><i class="fas fa-calendar-alt"></i> Trade Calendar</h3>
+                    <div class="calendar-controls">
+                        <button onclick="changeCalendarMonth(-1)" class="calendar-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span id="calendar-month">November 2024</span>
+                        <button onclick="changeCalendarMonth(1)" class="calendar-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="trade-calendar" class="trade-calendar"></div>
+            </div>
+
+            <!-- Modern Navigation Tabs -->
+            <nav class="nav-tabs">
+                <button class="nav-btn active" onclick="showSection('add-trade')">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>Add Trade</span>
+                </button>
+                <button class="nav-btn" onclick="showSection('trade-history')">
+                    <i class="fas fa-list"></i>
+                    <span>Trade History</span>
+                </button>
+                <button class="nav-btn" onclick="showSection('analytics')">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </button>
+                <button class="nav-btn" onclick="showSection('calendar')">
+                    <i class="fas fa-calendar"></i>
+                    <span>Calendar</span>
+                </button>
+            </nav>
 
         <!-- Add Trade Section -->
         <section id="add-trade" class="section active">
-            <div class="card">
-                <h2>Add New Trade</h2>
-                <form id="trade-form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="trade-date">Trade Date *</label>
-                            <input type="datetime-local" id="trade-date" required>
+            <div class="card modern-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-plus-circle"></i> Add New Trade</h2>
+                    <div class="quick-actions">
+                        <button onclick="loadTemplateTrade()" class="btn-quick">
+                            <i class="fas fa-file-import"></i> Template
+                        </button>
+                    </div>
+                </div>
+
+                <form id="trade-form" class="modern-form">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Trade Information</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="trade-date">
+                                    <i class="fas fa-clock"></i> Trade Date & Time *
+                                </label>
+                                <input type="datetime-local" id="trade-date" required class="modern-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="symbol">
+                                    <i class="fas fa-chart-line"></i> Symbol/Pair *
+                                </label>
+                                <input type="text" id="symbol" placeholder="e.g., AAPL, EUR/USD, BTC/USD" required class="modern-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="trade-type">
+                                    <i class="fas fa-exchange-alt"></i> Trade Type *
+                                </label>
+                                <div class="trade-type-selector">
+                                    <button type="button" class="type-btn buy-btn" onclick="selectTradeType('BUY')">
+                                        <i class="fas fa-arrow-up"></i> Buy/Long
+                                    </button>
+                                    <button type="button" class="type-btn sell-btn" onclick="selectTradeType('SELL')">
+                                        <i class="fas fa-arrow-down"></i> Sell/Short
+                                    </button>
+                                </div>
+                                <input type="hidden" id="trade-type" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="strategy">
+                                    <i class="fas fa-chess"></i> Trading Strategy
+                                </label>
+                                <select id="strategy" class="modern-input">
+                                    <option value="">Select Strategy</option>
+                                    <option value="Scalping">Scalping</option>
+                                    <option value="Day Trading">Day Trading</option>
+                                    <option value="Swing Trading">Swing Trading</option>
+                                    <option value="Position Trading">Position Trading</option>
+                                    <option value="Breakout">Breakout</option>
+                                    <option value="Reversal">Reversal</option>
+                                    <option value="Trend Following">Trend Following</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-dollar-sign"></i> Price & Position</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="entry-price">
+                                    <i class="fas fa-sign-in-alt"></i> Entry Price *
+                                </label>
+                                <input type="number" id="entry-price" step="0.01" placeholder="0.00" required class="modern-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exit-price">
+                                    <i class="fas fa-sign-out-alt"></i> Exit Price *
+                                </label>
+                                <input type="number" id="exit-price" step="0.01" placeholder="0.00" required class="modern-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="quantity">
+                                    <i class="fas fa-cubes"></i> Quantity *
+                                </label>
+                                <input type="number" id="quantity" step="0.01" placeholder="0.00" required class="modern-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="position-size">
+                                    <i class="fas fa-wallet"></i> Position Size
+                                </label>
+                                <input type="number" id="position-size" step="0.01" placeholder="0.00" class="modern-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fees">
+                                    <i class="fas fa-receipt"></i> Fees & Commissions
+                                </label>
+                                <input type="number" id="fees" step="0.01" placeholder="0.00" value="0" class="modern-input">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="risk-reward">
+                                    <i class="fas fa-balance-scale"></i> Risk/Reward Ratio
+                                </label>
+                                <div class="ratio-display" id="ratio-display">
+                                    <span class="ratio-value">1:0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-sticky-note"></i> Additional Details</h3>
+                        <div class="form-group full-width">
+                            <label for="notes">
+                                <i class="fas fa-pencil-alt"></i> Trade Notes
+                            </label>
+                            <textarea id="notes" rows="4" placeholder="Enter your trade analysis, market conditions, setup details..." class="modern-textarea"></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="symbol">Symbol/Pair *</label>
-                            <input type="text" id="symbol" placeholder="e.g., AAPL, EUR/USD" required>
+                            <label for="tags">
+                                <i class="fas fa-tags"></i> Tags
+                            </label>
+                            <input type="text" id="tags" placeholder="e.g., momentum, support, breakout" class="modern-input">
                         </div>
+                    </div>
 
-                        <div class="form-group">
-                            <label for="trade-type">Trade Type *</label>
-                            <select id="trade-type" required>
-                                <option value="">Select Type</option>
-                                <option value="BUY">Buy/Long</option>
-                                <option value="SELL">Sell/Short</option>
-                            </select>
+                    <div class="profit-loss-preview" id="pl-preview">
+                        <div class="preview-header">
+                            <h4><i class="fas fa-chart-pie"></i> Trade Preview</h4>
                         </div>
-
-                        <div class="form-group">
-                            <label for="entry-price">Entry Price *</label>
-                            <input type="number" id="entry-price" step="0.01" placeholder="0.00" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exit-price">Exit Price *</label>
-                            <input type="number" id="exit-price" step="0.01" placeholder="0.00" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="position-size">Position Size *</label>
-                            <input type="number" id="position-size" step="0.01" placeholder="0.00" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="quantity">Quantity/Contracts *</label>
-                            <input type="number" id="quantity" step="0.01" placeholder="0.00" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fees">Fees/Commissions</label>
-                            <input type="number" id="fees" step="0.01" placeholder="0.00" value="0">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="strategy">Strategy</label>
-                            <input type="text" id="strategy" placeholder="e.g., Breakout, Scalping">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="notes">Notes</label>
-                            <textarea id="notes" rows="3" placeholder="Additional trade details..."></textarea>
+                        <div class="preview-grid">
+                            <div class="preview-item">
+                                <label>Potential P&L:</label>
+                                <span id="preview-pl" class="profit-amount">$0.00</span>
+                            </div>
+                            <div class="preview-item">
+                                <label>ROI:</label>
+                                <span id="preview-roi" class="roi-amount">0%</span>
+                            </div>
+                            <div class="preview-item">
+                                <label>Win Probability:</label>
+                                <span id="preview-winprob" class="winprob-amount">50%</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" class="btn-primary">
+                        <button type="submit" class="btn-primary modern-btn">
                             <i class="fas fa-save"></i> Save Trade
                         </button>
-                        <button type="reset" class="btn-secondary">
-                            <i class="fas fa-undo"></i> Reset
+                        <button type="button" onclick="resetForm()" class="btn-secondary modern-btn">
+                            <i class="fas fa-undo"></i> Reset Form
+                        </button>
+                        <button type="button" onclick="saveAsDraft()" class="btn-tertiary modern-btn">
+                            <i class="fas fa-save"></i> Save as Draft
                         </button>
                     </div>
                 </form>
@@ -101,34 +373,59 @@
 
         <!-- Trade History Section -->
         <section id="trade-history" class="section">
-            <div class="card">
-                <div class="section-header">
-                    <h2>Trade History</h2>
+            <div class="card modern-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-list"></i> Trade History</h2>
                     <div class="filter-controls">
-                        <input type="text" id="search-input" placeholder="Search trades...">
-                        <select id="filter-type">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Search trades...">
+                        </div>
+                        <select id="filter-type" class="modern-select">
                             <option value="">All Types</option>
                             <option value="BUY">Buy/Long</option>
                             <option value="SELL">Sell/Short</option>
                         </select>
-                        <button onclick="exportTrades()" class="btn-export">
+                        <select id="filter-strategy" class="modern-select">
+                            <option value="">All Strategies</option>
+                        </select>
+                        <button onclick="exportTrades()" class="btn-export modern-btn">
                             <i class="fas fa-download"></i> Export
                         </button>
                     </div>
                 </div>
-                <div class="table-container">
-                    <table id="trades-table">
+
+                <div class="table-wrapper">
+                    <table id="trades-table" class="modern-table">
                         <thead>
                             <tr>
-                                <th onclick="sortTrades('date')">Date <i class="fas fa-sort"></i></th>
-                                <th onclick="sortTrades('symbol')">Symbol <i class="fas fa-sort"></i></th>
-                                <th onclick="sortTrades('type')">Type <i class="fas fa-sort"></i></th>
-                                <th onclick="sortTrades('entry')">Entry <i class="fas fa-sort"></i></th>
-                                <th onclick="sortTrades('exit')">Exit <i class="fas fa-sort"></i></th>
-                                <th onclick="sortTrades('size')">Size <i class="fas fa-sort"></i></th>
-                                <th onclick="sortTrades('pl')">P&L <i class="fas fa-sort"></i></th>
-                                <th onclick="sortTrades('roi')">ROI% <i class="fas fa-sort"></i></th>
-                                <th>Strategy</th>
+                                <th onclick="sortTrades('date')" class="sortable">
+                                    Date/Time <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('symbol')" class="sortable">
+                                    Symbol <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('type')" class="sortable">
+                                    Type <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('entry')" class="sortable">
+                                    Entry <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('exit')" class="sortable">
+                                    Exit <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('quantity')" class="sortable">
+                                    Qty <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('pl')" class="sortable">
+                                    P&L <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('roi')" class="sortable">
+                                    ROI% <i class="fas fa-sort"></i>
+                                </th>
+                                <th onclick="sortTrades('strategy')" class="sortable">
+                                    Strategy <i class="fas fa-sort"></i>
+                                </th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -136,8 +433,100 @@
                         </tbody>
                     </table>
                     <div id="no-trades" class="no-data" style="display: none;">
-                        <i class="fas fa-chart-line"></i>
-                        <p>No trades found. Add your first trade to get started!</p>
+                        <div class="no-data-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>No trades found</h3>
+                        <p>Add your first trade to get started!</p>
+                        <button onclick="showSection('add-trade')" class="btn-primary modern-btn">
+                            <i class="fas fa-plus"></i> Add Your First Trade
+                        </button>
+                    </div>
+                </div>
+
+                <div class="table-pagination" id="table-pagination">
+                    <div class="pagination-info">
+                        Showing <span id="showing-start">0</span> to <span id="showing-end">0</span> of <span id="total-records">0</span> trades
+                    </div>
+                    <div class="pagination-controls">
+                        <button onclick="changePage(-1)" class="pagination-btn" id="prev-btn">
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span class="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
+                        <button onclick="changePage(1)" class="pagination-btn" id="next-btn">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar" class="section">
+            <div class="card modern-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-calendar-alt"></i> Trade Calendar</h2>
+                    <div class="calendar-controls">
+                        <button onclick="changeCalendarView('month')" class="view-btn active" data-view="month">
+                            <i class="fas fa-calendar"></i> Month
+                        </button>
+                        <button onclick="changeCalendarView('week')" class="view-btn" data-view="week">
+                            <i class="fas fa-calendar-week"></i> Week
+                        </button>
+                        <button onclick="changeCalendarView('year')" class="view-btn" data-view="year">
+                            <i class="fas fa-calendar-alt"></i> Year
+                        </button>
+                    </div>
+                </div>
+
+                <div class="calendar-nav">
+                    <button onclick="navigateCalendar(-1)" class="calendar-nav-btn">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 id="calendar-title">November 2024</h3>
+                    <button onclick="navigateCalendar(1)" class="calendar-nav-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="calendar-container">
+                    <div id="trade-calendar-extended" class="trade-calendar-extended">
+                        <div class="calendar-legend">
+                            <div class="legend-item">
+                                <div class="legend-color profit-day"></div>
+                                <span>Profit Day</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color loss-day"></div>
+                                <span>Loss Day</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color mixed-day"></div>
+                                <span>Mixed Day</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color no-trades"></div>
+                                <span>No Trades</span>
+                            </div>
+                        </div>
+                        <div id="calendar-grid" class="calendar-grid">
+                            <!-- Calendar will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-summary">
+                    <div class="summary-stat">
+                        <h4>This Month</h4>
+                        <div class="summary-value profit" id="monthly-pl">$0.00</div>
+                    </div>
+                    <div class="summary-stat">
+                        <h4>Trading Days</h4>
+                        <div class="summary-value" id="monthly-days">0</div>
+                    </div>
+                    <div class="summary-stat">
+                        <h4>Win Rate</h4>
+                        <div class="summary-value" id="monthly-winrate">0%</div>
                     </div>
                 </div>
             </div>
@@ -145,58 +534,167 @@
 
         <!-- Analytics Section -->
         <section id="analytics" class="section">
+            <div class="analytics-header">
+                <h2><i class="fas fa-chart-bar"></i> Performance Analytics</h2>
+                <div class="analytics-controls">
+                    <select id="analytics-period" class="modern-select">
+                        <option value="all">All Time</option>
+                        <option value="year">This Year</option>
+                        <option value="month">This Month</option>
+                        <option value="week">This Week</option>
+                    </select>
+                    <button onclick="refreshAnalytics()" class="modern-btn">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+            </div>
+
             <div class="analytics-grid">
-                <div class="card">
-                    <h3>Summary Statistics</h3>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <label>Total Trades</label>
-                            <span id="total-trades">0</span>
+                <!-- Key Performance Indicators -->
+                <div class="analytics-card kpi-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-tachometer-alt"></i> Key Performance</h3>
+                    </div>
+                    <div class="kpi-grid">
+                        <div class="kpi-item primary-kpi">
+                            <div class="kpi-icon profit-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h4 id="analytics-total-pl" class="kpi-value">$0.00</h4>
+                                <p class="kpi-label">Total P&L</p>
+                                <div class="kpi-change positive" id="pl-change">
+                                    <i class="fas fa-arrow-up"></i> +0%
+                                </div>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <label>Win Rate</label>
-                            <span id="win-rate">0%</span>
+
+                        <div class="kpi-item">
+                            <div class="kpi-icon trades-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h4 id="analytics-total-trades" class="kpi-value">0</h4>
+                                <p class="kpi-label">Total Trades</p>
+                                <div class="kpi-change neutral">0 this month</div>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <label>Total P&L</label>
-                            <span id="total-pl">$0.00</span>
+
+                        <div class="kpi-item">
+                            <div class="kpi-icon winrate-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h4 id="analytics-winrate" class="kpi-value">0%</h4>
+                                <p class="kpi-label">Win Rate</p>
+                                <div class="kpi-change neutral">0 wins</div>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <label>Avg P&L</label>
-                            <span id="avg-pl">$0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <label>Winning Trades</label>
-                            <span id="winning-trades">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <label>Losing Trades</label>
-                            <span id="losing-trades">0</span>
-                        </div>
-                        <div class="stat-item">
-                            <label>Max Win</label>
-                            <span id="max-win">$0.00</span>
-                        </div>
-                        <div class="stat-item">
-                            <label>Max Loss</label>
-                            <span id="max-loss">$0.00</span>
+
+                        <div class="kpi-item">
+                            <div class="kpi-icon avgwin-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="kpi-content">
+                                <h4 id="analytics-avg-pl" class="kpi-value">$0.00</h4>
+                                <p class="kpi-label">Avg. P&L</p>
+                                <div class="kpi-change neutral">$0.00</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card">
-                    <h3>Performance Chart</h3>
-                    <canvas id="performance-chart" width="400" height="200"></canvas>
+                <!-- Performance Trends -->
+                <div class="analytics-card chart-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line"></i> Performance Trends</h3>
+                        <div class="chart-controls">
+                            <button class="chart-btn active" data-chart="cumulative">Cumulative</button>
+                            <button class="chart-btn" data-chart="daily">Daily P&L</button>
+                            <button class="chart-btn" data-chart="distribution">Distribution</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="performance-chart"></canvas>
+                    </div>
                 </div>
 
-                <div class="card">
-                    <h3>Strategy Performance</h3>
-                    <div id="strategy-stats"></div>
+                <!-- Strategy Analysis -->
+                <div class="analytics-card strategy-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chess"></i> Strategy Analysis</h3>
+                        <button onclick="showStrategyDetails()" class="btn-small">
+                            <i class="fas fa-external-link-alt"></i> Details
+                        </button>
+                    </div>
+                    <div id="strategy-stats" class="strategy-stats"></div>
                 </div>
 
-                <div class="card">
-                    <h3>Monthly Breakdown</h3>
-                    <canvas id="monthly-chart" width="400" height="200"></canvas>
+                <!-- Risk Metrics -->
+                <div class="analytics-card risk-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-shield-alt"></i> Risk Metrics</h3>
+                    </div>
+                    <div class="risk-metrics">
+                        <div class="risk-item">
+                            <div class="risk-label">Max Drawdown</div>
+                            <div class="risk-value" id="max-drawdown">$0.00</div>
+                            <div class="risk-bar">
+                                <div class="risk-progress" id="drawdown-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">Sharpe Ratio</div>
+                            <div class="risk-value" id="sharpe-ratio">0.00</div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">Profit Factor</div>
+                            <div class="risk-value" id="profit-factor">0.00</div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">Avg. Win/Loss Ratio</div>
+                            <div class="risk-value" id="win-loss-ratio">0.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Performance -->
+                <div class="analytics-card monthly-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-calendar-alt"></i> Monthly Performance</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="monthly-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Trade Distribution -->
+                <div class="analytics-card distribution-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-pie"></i> Trade Distribution</h3>
+                    </div>
+                    <div class="distribution-stats">
+                        <div class="distribution-item">
+                            <h4>By Trade Type</h4>
+                            <div class="chart-container small">
+                                <canvas id="trade-type-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="distribution-item">
+                            <h4>By Day of Week</h4>
+                            <div class="chart-container small">
+                                <canvas id="dayofweek-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Performance -->
+                <div class="analytics-card recent-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> Recent Performance</h3>
+                    </div>
+                    <div id="recent-trades-summary" class="recent-summary"></div>
                 </div>
             </div>
         </section>
