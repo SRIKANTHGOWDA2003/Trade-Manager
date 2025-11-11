@@ -1,0 +1,60 @@
+{
+  "name": "trade-manager",
+  "version": "1.0.0",
+  "description": "A comprehensive web-based trade management application to help traders track, analyze, and improve their trading performance.",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000 || python -m http.server 8000 || npx serve .",
+    "dev": "python3 -m http.server 8000 || python -m http.server 8000",
+    "build": "echo 'No build step required - static files ready for deployment'",
+    "deploy": "echo 'Deploy by uploading files to your hosting provider or GitHub Pages'"
+  },
+  "keywords": [
+    "trading",
+    "finance",
+    "trade-management",
+    "profit-loss",
+    "portfolio",
+    "analytics",
+    "charts",
+    "web-app",
+    "offline",
+    "local-storage",
+    "javascript",
+    "html5",
+    "css3"
+  ],
+  "author": {
+    "name": "Trade Manager",
+    "email": "",
+    "url": ""
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/trade-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/trade-manager/issues"
+  },
+  "homepage": "https://github.com/yourusername/trade-manager#readme",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  },
+  "files": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "README.md",
+    "LICENSE",
+    ".gitignore"
+  ],
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
