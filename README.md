@@ -1,206 +1,298 @@
-# 📊 Trade Manager
+# 📊 Trade Manager Pro
 
-A comprehensive web-based trade management application designed to help traders track, analyze, and improve their trading performance. Track your trades, monitor profitability, and gain valuable insights into your trading patterns.
+A professional Next.js trade management application with shadcn/ui components, designed to help traders track, analyze, and improve their trading performance with advanced features and modern UI.
 
 ## ✨ Features
 
-### 📈 Trade Management
+### 🔐 User Authentication
+- **Secure Login/Signup**: User authentication with NextAuth.js
+- **Personal Accounts**: Each user gets their own isolated trading data
+- **Session Management**: Secure session handling with JWT tokens
+- **Protected Routes**: Authentication guards for all application pages
+
+### 📈 Advanced Trade Management
 - **Complete Trade Entry**: Log all essential trade details including date, symbol, entry/exit prices, position size, and more
 - **Trade Types**: Support for both Buy/Long and Sell/Short positions
-- **Flexible Position Sizing**: Track various position sizes and contract quantities
-- **Fee Tracking**: Include commissions and fees in your profit/loss calculations
-- **Strategy Notes**: Document your trading strategies and trade-specific notes
+- **Real-time P&L**: Automatic profit/loss and ROI calculations
+- **Strategy Tracking**: Document your trading strategies and trade-specific notes
+- **Trade Status**: Track open, closed, and cancelled trades
 
-### 📊 Analytics & Insights
-- **Real-time P&L Calculations**: Automatic profit/loss and ROI calculations
-- **Performance Charts**: Visual representation of your cumulative returns over time
-- **Win Rate Analysis**: Track your winning percentage and average returns
-- **Strategy Performance**: Compare performance across different trading strategies
-- **Monthly Breakdown**: View your profit/loss by month with interactive charts
+### 📊 Analytics & Dashboard
+- **Performance Dashboard**: Comprehensive overview with key metrics
+- **Interactive Charts**: Beautiful charts using Recharts library
+- **Risk Metrics**: Sharpe ratio, profit factor, win rate analysis
+- **Monthly Analysis**: Profit/loss breakdown by month
+- **Symbol Distribution**: Track performance across different trading symbols
 
-### 🔍 Data Management
-- **Search & Filter**: Quickly find specific trades or filter by trade type
-- **Sortable Tables**: Sort your trade history by any column
-- **Edit & Delete**: Update or remove trades as needed
-- **CSV Export**: Export your trade data for external analysis
-- **Local Storage**: All data saved securely in your browser
+### 📅 Calendar View
+- **Visual Trade Calendar**: Interactive calendar showing trade activity
+- **Color-coded Days**: Visual indicators for profitable/losing days
+- **Daily Trade Details**: Click any day to see detailed trade information
+- **Monthly Statistics**: Quick stats for any selected month
 
-### 📱 User Experience
-- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
-- **Modern Interface**: Clean, professional design with intuitive navigation
-- **Offline Functionality**: Works completely offline without internet connection
-- **Fast Performance**: Lightweight application with instant loading
+### 🎨 Modern UI/UX
+- **shadcn/ui Components**: Professional, accessible UI components
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Dark/Light Theme**: Modern theme support with CSS variables
+- **Smooth Animations**: Elegant transitions and interactions
+
+### 💾 Database Integration
+- **Prisma ORM**: Modern database toolkit with type safety
+- **SQLite Database**: Lightweight, file-based database for easy setup
+- **Data Relationships**: Proper relational data structure
+- **Migration Support**: Easy database schema management
 
 ## 🚀 Quick Start
 
-### Method 1: Direct Download
-1. **Download** the files to your computer
-2. **Open `index.html`** in your web browser
-3. **Start tracking trades** immediately!
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- Git
 
-### Method 2: Clone from GitHub
+### Installation
+
+1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/trade-manager.git
-cd trade-manager
+git clone https://github.com/yourusername/trade-manager-pro.git
+cd trade-manager-pro
 ```
 
-### Method 3: Live Demo
-Visit the live demo: [Your GitHub Pages URL]
+2. **Install dependencies**
+```bash
+npm install
+```
 
-## 📋 Prerequisites
+3. **Set up the database**
+```bash
+npm run db:push
+npm run db:generate
+```
 
-- Modern web browser (Chrome, Firefox, Safari, Edge)
-- No installation required
-- No internet connection needed after initial download
+4. **Start the development server**
+```bash
+npm run dev
+```
 
-## 💻 Usage Guide
+5. **Open your browser**
+Navigate to [http://localhost:3000](http://localhost:3000)
 
-### Adding Your First Trade
+### Environment Setup
 
-1. **Navigate to the "Add Trade" tab**
-2. **Fill in the trade details**:
-   - **Date & Time**: When the trade was executed
-   - **Symbol**: Trading pair (e.g., AAPL, EUR/USD)
-   - **Trade Type**: Buy/Long or Sell/Short
-   - **Entry Price**: Your entry price
-   - **Exit Price**: Your exit price
-   - **Position Size**: Your position size
-   - **Quantity**: Number of shares/contracts
-   - **Fees**: Any commissions or fees
-   - **Strategy**: Trading strategy used
-   - **Notes**: Additional trade details
+Create a `.env.local` file in the root directory:
 
-3. **Click "Save Trade"** to record the trade
+```env
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key-here
+```
 
-### Analyzing Performance
+## 📋 Usage Guide
 
-1. **Visit the "Analytics" tab** to view:
-   - **Summary Statistics**: Total trades, win rate, total P&L
-   - **Performance Chart**: Cumulative returns over time
-   - **Strategy Breakdown**: Performance by strategy
-   - **Monthly Analysis**: Monthly profit/loss chart
+### 1. Create Account
+- Visit `/auth/signup` to create a new account
+- Fill in your name, email, and password
+- After registration, sign in with your credentials
 
-2. **Use the "Trade History" tab** to:
-   - **View all trades** in a sortable table
-   - **Search for specific trades**
-   - **Filter by trade type**
-   - **Edit or delete trades**
-   - **Export data to CSV**
+### 2. Add Trades
+- Navigate to `/trades`
+- Fill in the trade form with:
+  - Symbol (e.g., AAPL, BTCUSDT)
+  - Trade Type (Buy/Sell)
+  - Entry Price and Quantity
+  - Entry Date and Time
+  - Optional: Strategy and Notes
+- Click "Add Trade" to save
+
+### 3. View Dashboard
+- Visit `/dashboard` for comprehensive analytics
+- View key metrics: Total P&L, Win Rate, Profit Factor, Sharpe Ratio
+- Explore interactive charts showing performance over time
+
+### 4. Calendar View
+- Navigate to `/calendar` for visual trade tracking
+- Click on any date to see trades for that day
+- Color-coded indicators show profitable/losing days
 
 ## 🏗️ Project Structure
 
 ```
-trade-manager/
-├── index.html          # Main application file
-├── styles.css          # Styling and responsive design
-├── script.js           # Application logic and functionality
-├── README.md           # This file
-├── package.json        # Project metadata
-├── LICENSE             # MIT License
-└── .gitignore          # Git ignore file
+trade-manager-pro/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   │   ├── auth/          # Authentication endpoints
+│   │   └── trades/        # Trade CRUD operations
+│   ├── auth/              # Authentication pages
+│   │   ├── signin/        # Login page
+│   │   └── signup/        # Registration page
+│   ├── dashboard/         # Dashboard page
+│   ├── trades/            # Trade management page
+│   ├── calendar/          # Calendar view page
+│   ├── layout.tsx         # Root layout component
+│   └── page.tsx           # Home page
+├── components/            # Reusable components
+│   ├── ui/               # shadcn/ui components
+│   └── navigation.tsx    # Navigation component
+├── lib/                  # Utility libraries
+│   ├── auth.ts          # NextAuth configuration
+│   ├── prisma.ts        # Prisma client setup
+│   └── utils.ts         # Utility functions
+├── prisma/               # Database schema and migrations
+│   └── schema.prisma    # Database schema definition
+├── public/              # Static assets
+├── package.json         # Project dependencies
+├── next.config.js       # Next.js configuration
+├── tailwind.config.js   # Tailwind CSS configuration
+├── tsconfig.json        # TypeScript configuration
+└── README.md           # This file
 ```
 
 ## 🛠️ Technology Stack
 
-- **HTML5**: Semantic markup structure
-- **CSS3**: Modern styling with CSS Grid and Flexbox
-- **JavaScript (ES6+)**: Vanilla JavaScript with modern features
-- **Chart.js**: Interactive charts and data visualization
-- **Font Awesome**: Professional icons
-- **LocalStorage**: Browser-based data persistence
+### Frontend
+- **Next.js 14**: React framework with App Router
+- **TypeScript**: Type-safe JavaScript
+- **React 18**: Modern React with hooks
+- **Tailwind CSS**: Utility-first CSS framework
+- **shadcn/ui**: High-quality UI components
+- **Lucide React**: Beautiful icons
+- **Recharts**: Chart library for data visualization
+
+### Backend & Database
+- **NextAuth.js**: Authentication for Next.js
+- **Prisma**: Modern database toolkit
+- **SQLite**: Lightweight database
+- **bcryptjs**: Password hashing
+- **Zod**: Schema validation
+
+### Development Tools
+- **ESLint**: Code linting
+- **PostCSS**: CSS processing
+- **Autoprefixer**: CSS vendor prefixes
 
 ## 📊 Key Features Explained
 
-### Profit & Loss Calculations
-The application automatically calculates:
-- **Gross P&L**: (Exit Price - Entry Price) × Quantity
-- **Net P&L**: Gross P&L - Fees
-- **ROI Percentage**: (Net P&L ÷ Investment) × 100
-- **Position Types**: Correctly handles both long and short positions
+### Authentication System
+- **NextAuth.js Integration**: Secure authentication with multiple providers
+- **Session Management**: JWT-based sessions with secure storage
+- **Protected Routes**: Middleware to protect authenticated pages
+- **User Data Isolation**: Each user can only access their own trades
 
-### Data Persistence
-- **All trades stored locally** in browser localStorage
-- **No server required** - works completely offline
-- **Data persists between browser sessions**
-- **Export functionality** for data backup
+### Database Schema
+- **Users Table**: User account information
+- **Trades Table**: Complete trade records with relationships
+- **Type Safety**: Full TypeScript integration with Prisma
 
-### Responsive Design
-- **Mobile-first approach** with progressive enhancement
-- **Touch-friendly interface** for mobile devices
-- **Adaptive layouts** for different screen sizes
-- **Accessible design** following WCAG guidelines
+### Analytics Calculations
+- **Win Rate**: Percentage of profitable trades
+- **Profit Factor**: Ratio of total profits to total losses
+- **Sharpe Ratio**: Risk-adjusted return metric
+- **ROI**: Return on investment calculations
+- **Average Win/Loss**: Statistical analysis of trade performance
+
+### Calendar Features
+- **Trade Density**: Visual representation of trading frequency
+- **Performance Indicators**: Color coding for profitable/losing days
+- **Monthly Statistics**: Quick performance overview
+- **Day-by-Day Breakdown**: Detailed trade information for any date
 
 ## 🔧 Customization
 
-### Adding Custom Strategies
-Edit the `script.js` file to add your custom trading strategies and analytics.
+### Adding New Features
+- **API Routes**: Add new endpoints in `app/api/`
+- **Pages**: Create new pages in `app/`
+- **Components**: Add reusable components in `components/`
+- **Database**: Update schema in `prisma/schema.prisma`
 
-### Custom Styling
-Modify the `styles.css` file to customize colors, fonts, and layout.
+### Styling
+- **Theme**: Modify CSS variables in `app/globals.css`
+- **Components**: Customize shadcn/ui components in `components/ui/`
+- **Layout**: Update layout in `app/layout.tsx`
 
-### Advanced Features
-The codebase is structured for easy extension with features like:
-- Multiple portfolio support
-- Advanced risk metrics
-- Import from brokerage APIs
-- Custom timeframes and filters
+### Database Modifications
+1. **Update Schema**: Edit `prisma/schema.prisma`
+2. **Generate Client**: Run `npm run db:generate`
+3. **Push Changes**: Run `npm run db:push`
 
-## 📝 Data Fields
+## 📝 API Endpoints
 
-| Field | Description | Required |
-|-------|-------------|----------|
-| Date & Time | Trade execution timestamp | ✅ |
-| Symbol | Trading symbol or pair | ✅ |
-| Trade Type | Buy/Long or Sell/Short | ✅ |
-| Entry Price | Price at trade entry | ✅ |
-| Exit Price | Price at trade exit | ✅ |
-| Position Size | Size of the position | ✅ |
-| Quantity | Number of shares/contracts | ✅ |
-| Fees | Commissions and fees | ❌ |
-| Strategy | Trading strategy used | ❌ |
-| Notes | Additional trade details | ❌ |
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `GET/POST /api/auth/[...nextauth]` - NextAuth.js handler
+
+### Trades
+- `GET /api/trades` - Get user's trades
+- `POST /api/trades` - Create new trade
+- `PUT /api/trades/:id` - Update existing trade
+- `DELETE /api/trades/:id` - Delete trade
 
 ## 🚀 Deployment
 
-### GitHub Pages (Free)
-1. **Fork this repository**
-2. **Go to Settings → Pages**
-3. **Select main branch as source**
-4. **Your site will be live** at `https://yourusername.github.io/trade-manager`
+### Vercel (Recommended)
+1. **Connect GitHub**: Link repository to Vercel
+2. **Environment Variables**: Set up required environment variables
+3. **Deploy**: Automatic deployment on push to main branch
 
-### Other Hosting Options
-- **Netlify**: Drag and drop the files for instant deployment
-- **Vercel**: Connect your GitHub repository
-- **Firebase Hosting**: Free static hosting
-- **Any static hosting service**: Upload the HTML, CSS, and JS files
+### Other Platforms
+- **Netlify**: Static site hosting
+- **Railway**: Full-stack application hosting
+- **DigitalOcean**: Cloud hosting with App Platform
 
-## 🔒 Security & Privacy
+### Production Setup
+1. **Environment Variables**:
+   ```env
+   NEXTAUTH_URL=https://your-domain.com
+   NEXTAUTH_SECRET=your-production-secret
+   DATABASE_URL=your-production-database-url
+   ```
 
-- **100% Private**: All data stored locally in your browser
-- **No data transmission**: No information sent to external servers
-- **Offline functionality**: Works without internet connection
-- **Secure calculations**: All computations performed client-side
+2. **Database Setup**:
+   - Use PostgreSQL for production
+   - Set up proper database connections
+   - Run migrations: `npm run db:push`
+
+## 🔒 Security Features
+
+- **Password Hashing**: bcryptjs for secure password storage
+- **Session Security**: Secure JWT token handling
+- **CSRF Protection**: Built-in NextAuth.js protection
+- **Data Validation**: Zod schema validation for API inputs
+- **SQL Injection Prevention**: Prisma ORM prevents SQL injection
+
+## 🧪 Development
+
+### Running Tests
+```bash
+npm run test        # Run test suite
+npm run test:watch  # Watch mode
+npm run lint        # Code linting
+```
+
+### Database Management
+```bash
+npm run db:studio    # Open Prisma Studio
+npm run db:push      # Push schema changes
+npm run db:generate  # Generate Prisma client
+npm run db:migrate   # Run migrations
+```
+
+### Building for Production
+```bash
+npm run build        # Build production application
+npm run start        # Start production server
+```
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+1. **Fork** the repository
+2. **Create feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit changes** (`git commit -m 'Add amazing feature'`)
+4. **Push to branch** (`git push origin feature/amazing-feature`)
+5. **Open Pull Request**
 
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
-4. **Push to the branch** (`git push origin feature/amazing-feature`)
-5. **Open a Pull Request**
-
-### Development Setup
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/trade-manager.git
-
-# Navigate to the project directory
-cd trade-manager
-
-# Open index.html in your browser to start development
-```
+### Development Guidelines
+- Follow TypeScript best practices
+- Use proper error handling
+- Write clean, commented code
+- Test new features thoroughly
 
 ## 📄 License
 
@@ -209,35 +301,27 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙋‍♂️ Support
 
 - **Issues**: Report bugs or request features on GitHub Issues
-- **Discussions**: Ask questions and share your experiences
-- **Documentation**: Check this README for detailed usage instructions
+- **Discussions**: Ask questions and share experiences
+- **Documentation**: Check this README for detailed instructions
 
-## 🌟 Acknowledgments
+## 🌟 Roadmap
 
-- **Chart.js** for beautiful, interactive charts
-- **Font Awesome** for professional icons
-- **Modern JavaScript features** for clean, maintainable code
-- **CSS Grid and Flexbox** for responsive layouts
-
-## 📈 Roadmap
-
-Future enhancements planned:
-- [ ] Import data from brokerage accounts
-- [ ] Advanced risk metrics (Sharpe ratio, maximum drawdown)
-- [ ] Multiple portfolio support
-- [ ] Custom timeframes and date ranges
-- [ ] Trade journal with screenshots
-- [ ] Performance alerts and notifications
-- [ ] Export to multiple formats (Excel, PDF)
-- [ ] Advanced filtering options
-- [ ] Strategy backtesting tools
-- [ ] Economic calendar integration
+- [ ] **Mobile App**: React Native mobile application
+- [ ] **Advanced Analytics**: More sophisticated risk metrics
+- [ ] **Portfolio Management**: Multiple portfolio support
+- [ ] **Broker Integration**: Connect to brokerage APIs
+- [ ] **Real-time Data**: Live market data integration
+- [ ] **Backtesting**: Strategy backtesting tools
+- [ ] **Social Features**: Share strategies with community
+- [ ] **Export Features**: PDF reports, Excel exports
 
 ---
 
-**Happy Trading! 📊💰**
+## 🎉 Start Trading Better Today!
 
-Built with ❤️ for traders who want to track and improve their performance.
+Transform your trading with professional analytics and insights. Trade Manager Pro provides everything you need to track, analyze, and improve your trading performance.
+
+**Built with ❤️ using Next.js, TypeScript, and shadcn/ui**
 
 ---
 

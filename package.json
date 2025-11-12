@@ -1,60 +1,81 @@
 {
-  "name": "trade-manager",
-  "version": "1.0.0",
-  "description": "A comprehensive web-based trade management application to help traders track, analyze, and improve their trading performance.",
-  "main": "index.html",
+  "name": "trade-manager-pro",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "python3 -m http.server 8000 || python -m http.server 8000 || npx serve .",
-    "dev": "python3 -m http.server 8000 || python -m http.server 8000",
-    "build": "echo 'No build step required - static files ready for deployment'",
-    "deploy": "echo 'Deploy by uploading files to your hosting provider or GitHub Pages'"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate"
   },
+  "dependencies": {
+    "next": "14.0.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0",
+    "lucide-react": "^0.294.0",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-button": "^0.1.0",
+    "@radix-ui/react-calendar": "^2.0.0",
+    "@radix-ui/react-card": "^0.1.0",
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-form": "^0.0.3",
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-input": "^0.1.0",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-progress": "^1.0.3",
+    "@radix-ui/react-select": "^2.0.0",
+    "@radix-ui/react-separator": "^1.0.3",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
+    "@radix-ui/react-table": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@radix-ui/react-tooltip": "^1.0.7",
+    "recharts": "^2.8.0",
+    "date-fns": "^2.30.0",
+    "prisma": "^5.6.0",
+    "@prisma/client": "^5.6.0",
+    "next-auth": "^4.24.5",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.22.4",
+    "@hookform/resolvers": "^3.3.2",
+    "react-hook-form": "^7.48.2",
+    "react-hot-toast": "^2.4.1",
+    "react-day-picker": "^8.8.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3"
+  },
+  "description": "A comprehensive Next.js trade management application with shadcn/ui components",
   "keywords": [
     "trading",
     "finance",
-    "trade-management",
-    "profit-loss",
+    "next.js",
+    "shadcn",
+    "typescript",
     "portfolio",
-    "analytics",
-    "charts",
-    "web-app",
-    "offline",
-    "local-storage",
-    "javascript",
-    "html5",
-    "css3"
+    "analytics"
   ],
-  "author": {
-    "name": "Trade Manager",
-    "email": "",
-    "url": ""
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourusername/trade-manager.git"
-  },
-  "bugs": {
-    "url": "https://github.com/yourusername/trade-manager/issues"
-  },
-  "homepage": "https://github.com/yourusername/trade-manager#readme",
-  "devDependencies": {
-    "serve": "^14.2.0"
-  },
-  "files": [
-    "index.html",
-    "styles.css",
-    "script.js",
-    "README.md",
-    "LICENSE",
-    ".gitignore"
-  ],
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  "author": "Trade Manager Pro",
+  "license": "MIT"
 }
